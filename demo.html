@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网页截图插件演示页面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="white" opacity="0.1"><polygon points="0,0 1000,100 1000,0"/></svg>');
+            background-size: cover;
+        }
+        
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .section h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #2c3e50;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: white;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .feature-card p {
+            color: #7f8c8d;
+            line-height: 1.8;
+        }
+        
+        .demo-area {
+            background: #2c3e50;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .demo-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .demo-item {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .demo-item h4 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #ecf0f1;
+        }
+        
+        .instruction-steps {
+            text-align: left;
+            max-width: 800px;
+            margin: 50px auto 0;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+        
+        .step-number {
+            background: #e74c3c;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .step-content h5 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #ecf0f1;
+        }
+        
+        .step-content p {
+            color: #bdc3c7;
+            line-height: 1.6;
+        }
+        
+        .long-content {
+            padding: 60px 0;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .long-content h2 {
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .text-columns {
+            columns: 2;
+            column-gap: 40px;
+            text-align: justify;
+            line-height: 1.8;
+        }
+        
+        .text-columns p {
+            margin-bottom: 20px;
+            text-indent: 2em;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 50px 0;
+        }
+        
+        .gallery-item {
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .footer h3 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        
+        .footer p {
+            font-size: 1.1em;
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        .cta-button:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .text-columns {
+                columns: 1;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>网页截图插件演示</h1>
+            <p>测试整页截图和可视区域截图功能的完美页面</p>
+            <a href="#features" class="cta-button">开始体验</a>
+        </div>
+    </header>
+
+    <section class="section" id="features">
+        <div class="container">
+            <h2>功能特性</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3>整页截图</h3>
+                    <p>自动滚动页面并拼接完整截图，无论页面多长都能完整保存。类似Chrome开发者工具的原生截图功能，但更加便捷易用。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👁️</div>
+                    <h3>可视区域截图</h3>
+                    <p>快速截取当前浏览器窗口中可见的页面内容，适合快速分享或保存特定区域的信息。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>高性能处理</h3>
+                    <p>使用原生Chrome API实现，截图速度快，图片质量高。经过优化的算法确保大型页面也能快速处理。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3>自动保存</h3>
+                    <p>截图完成后自动保存到浏览器默认下载文件夹，文件名包含时间戳，方便管理和查找。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>简洁界面</h3>
+                    <p>精心设计的用户界面，操作简单直观。只需点击图标选择截图类型，即可完成截图操作。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>智能处理</h3>
+                    <p>自动处理固定定位元素、弹窗等可能影响截图效果的页面元素，确保截图结果清晰完整。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="demo-area">
+        <div class="container">
+            <h2>使用方法</h2>
+            <p>按照以下步骤使用网页截图插件</p>
+            
+            <div class="instruction-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h5>安装插件</h5>
+                        <p>在Chrome浏览器中加载插件文件夹，开启开发者模式并选择"加载已解压的扩展程序"。</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h5>打开目标页面</h5>
+                        <p>导航到您想要截图的网页，等待页面完全加载完成。</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h5>点击插件图标</h5>
+                        <p>在浏览器工具栏中找到插件图标（相机形状），点击打开功能面板。</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h5>选择截图类型</h5>
+                        <p>根据需求选择"整页截图"或"可视区域截图"，点击对应按钮开始截图。</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h5>等待处理完成</h5>
+                        <p>插件会自动处理截图，整页截图可能需要几秒钟时间，请耐心等待。</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h5>查看保存结果</h5>
+                        <p>截图完成后会自动保存到下载文件夹，您可以在下载记录中找到截图文件。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="long-content">
+        <div class="container">
+            <h2>详细说明和技术实现</h2>
+            <div class="text-columns">
+                <p>网页截图插件是一个专业的Chrome浏览器扩展，旨在为用户提供便捷、高效的网页截图解决方案。与传统的截图工具相比，本插件具有独特的技术优势和用户体验优化。</p>
+                
+                <p>插件的核心技术基于Chrome Extension Manifest V3规范，这是Google最新推出的扩展开发标准。相比于旧版本，Manifest V3提供了更好的安全性、性能和稳定性保障。插件使用Service Worker作为背景脚本，确保了更好的资源管理和更快的响应速度。</p>
+                
+                <p>在整页截图功能的实现上，插件采用了智能分片拼接算法。首先通过注入的内容脚本获取页面的完整尺寸信息，包括可滚动区域的总宽度和高度。然后计算出需要截取的片段数量，通过程序化滚动页面，逐个截取每个可视区域的内容。</p>
+                
+                <p>为了确保截图质量，插件在每次滚动后都会等待一定时间，让页面内容完全渲染。这个等待时间经过精心调试，既保证了截图的完整性，又不会让用户感到明显的延迟。最后，使用Canvas API将所有截图片段按照正确的位置关系拼接成一张完整的图片。</p>
+                
+                <p>可视区域截图功能相对简单但同样重要。它直接使用Chrome的captureVisibleTab API，能够快速获取当前浏览器窗口中可见的页面内容。这个功能特别适合需要快速分享页面信息或保存特定区域内容的场景。</p>
+                
+                <p>插件还包含了多项用户体验优化。比如，在截图过程中会自动隐藏可能干扰截图效果的元素，如固定定位的导航栏、弹出窗口、工具提示等。截图完成后，这些元素会被自动恢复，确保不影响用户的正常浏览体验。</p>
+                
+                <p>在文件管理方面，插件会自动为每个截图生成包含时间戳的文件名，方便用户区分和管理。支持的图片格式为PNG，这种格式在保证高质量的同时，也具有良好的压缩效果和广泛的兼容性。</p>
+                
+                <p>安全性是插件开发的重要考虑因素。插件只申请了必要的权限，包括访问当前标签页、截取标签页内容、下载文件和注入脚本等。所有的数据处理都在本地完成，不会上传到任何服务器，充分保护用户的隐私安全。</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>示例图库</h2>
+            <p style="text-align: center; font-size: 1.2em; color: #7f8c8d; margin-bottom: 30px;">
+                以下是一些示例图片，用于测试截图功能在不同内容类型下的表现
+            </p>
+            <div class="gallery">
+                <div class="gallery-item">图片 1</div>
+                <div class="gallery-item">图片 2</div>
+                <div class="gallery-item">图片 3</div>
+                <div class="gallery-item">图片 4</div>
+                <div class="gallery-item">图片 5</div>
+                <div class="gallery-item">图片 6</div>
+                <div class="gallery-item">图片 7</div>
+                <div class="gallery-item">图片 8</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <h3>开始使用网页截图插件</h3>
+            <p>
+                这个演示页面展示了插件的各种功能和特性。页面包含了丰富的内容和多种布局，
+                非常适合测试整页截图功能。您可以尝试使用插件对这个页面进行截图，
+                体验其强大的功能和优秀的用户体验。
+            </p>
+            <p>
+                如果您在使用过程中遇到任何问题或有改进建议，
+                欢迎通过GitHub或其他方式与我们联系。
+                我们致力于为用户提供最好的网页截图解决方案。
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // 添加一些交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // 添加滚动动画效果
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // 为卡片添加动画效果
+            document.querySelectorAll('.feature-card, .demo-item, .gallery-item').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            width: 300px;
+            padding: 15px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            font-size: 18px;
+            margin: 0;
+            color: #333;
+        }
+        
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .screenshot-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .primary-btn {
+            background-color: #4285f4;
+            color: white;
+        }
+        
+        .primary-btn:hover {
+            background-color: #3367d6;
+        }
+        
+        .secondary-btn {
+            background-color: #f8f9fa;
+            color: #5f6368;
+            border: 1px solid #dadce0;
+        }
+        
+        .secondary-btn:hover {
+            background-color: #f1f3f4;
+        }
+        
+        .status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        .status.success {
+            background-color: #e8f5e8;
+            color: #137333;
+        }
+        
+        .status.error {
+            background-color: #fce8e6;
+            color: #d93025;
+        }
+        
+        .status.loading {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .icon {
+            width: 16px;
+            height: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>网页截图工具</h1>
+    </div>
+    
+    <div class="button-group">
+        <button id="fullScreenshot" class="screenshot-btn primary-btn">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21,17h-2V7H7v10h10v2H7a2,2,0,0,1-2-2V7A2,2,0,0,1,7,5H19a2,2,0,0,1,2,2V17Z"/>
+                <path d="M22,3H17a1,1,0,0,0,0,2h3V8a1,1,0,0,0,2,0V3A1,1,0,0,0,22,3Z"/>
+                <path d="M7,1A1,1,0,0,0,6,2V5H3A1,1,0,0,0,3,7H6V10a1,1,0,0,0,2,0V2A1,1,0,0,0,7,1Z"/>
+            </svg>
+            整页截图
+        </button>
+        
+        <button id="visibleScreenshot" class="screenshot-btn secondary-btn">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19,3H5A2,2,0,0,0,3,5V19a2,2,0,0,0,2,2H19a2,2,0,0,0,2-2V5A2,2,0,0,0,19,3ZM19,19H5V5H19V19Z"/>
+                <path d="M7,7h4v4H7Z"/>
+            </svg>
+            可视区域截图
+        </button>
+    </div>
+    
+    <div id="status" class="status hidden"></div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>
